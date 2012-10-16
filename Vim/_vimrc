@@ -1,0 +1,140 @@
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+set columns=170
+set lines=40
+set nocompatible
+set history=500
+set clipboard+=unnamed
+"set fenc=utf-8
+"set fencs=utf-8,usc-bom,gb18030,gbk,gbk2312,cp936
+filetype on
+filetype plugin on
+filetype indent on
+set viminfo+=!
+syntax on
+syntax enable
+set nobackup
+setlocal noswapfile
+set noswapfile
+set noerrorbells
+set novisualbell
+set autoread
+set lz 
+set noeb 
+set bufhidden=hide
+set linespace=0
+set wildmenu
+set ruler
+set wrap
+
+set mouse=a
+set selection=exclusive
+set selectmode=mouse,key
+set novisualbell
+set autoindent
+set smartindent
+set backspace=indent,eol,start 
+set ignorecase
+set nogdefault
+
+set formatoptions=tcrqn
+set cindent
+set tabstop=4
+set tw=0
+set softtabstop=4
+set shiftwidth=4
+au FileType html,vim,javascript setl shiftwidth=2
+au FileType html,vim,javascript setl tabstop=2
+
+" 使用空格代替制表符
+set expandtab
+set smarttab
+set showmatch
+set incsearch
+set confirm
+set cmdheight=1
+set si
+set lbr
+set hls
+
+set number
+set numberwidth=4
+colorscheme desert
+set autochdir
+set guioptions-=T
+set guioptions-=m
+set fileformat=unix
+set fileformats=unix,dos,mac
+set fileencoding=utf-8
+set fileencodings=utf-8,usc-bom,gbk2312,gbk,gbk18030,cp936
+let &termencoding = &encoding
+set langmenu=zh_CN.UTF-8
+set helplang=cn
+"set encoding=utf-8
+
+set guifont=Monaco:h11,微软雅黑:h11
+
+"taglist
+let Tlist_Auto_Highlight_Tag = 1
+let Tlist_Auto_Open = 1
+let Tlist_Auto_Update = 1
+let Tlist_Close_On_Select = 0
+let Tlist_Compact_Format = 0
+let Tlist_Display_Prototype = 0
+let Tlist_Display_Tag_Scope = 1
+let Tlist_Enable_Fold_Column = 0
+let Tlist_Exit_OnlyWindow = 0
+let Tlist_File_Fold_Auto_Close = 0
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Hightlight_Tag_On_BufEnter = 1
+let Tlist_Inc_Winwidth = 0
+let Tlist_Max_Submenu_Items = 1
+let Tlist_Max_Tag_Length = 30
+let Tlist_Process_File_Always = 0
+let Tlist_Show_Menu = 0
+let Tlist_Show_One_File = 0
+let Tlist_Sort_Type = "order"
+let Tlist_Use_Horiz_Window = 0
+let Tlist_Use_Right_Window = 1
+let Tlist_WinWidth = 30
+let tlist_php_settings = 'php;c:class;i:interfaces;d:constant;f:function'
+
+" nerdcommenter
+let mapleader = ","
+
+" map key
+map <F2> :NERDTreeToggle d:/App<Enter>
+map <F3> :TlistToggle<Enter>
+
+" autoload
+autocmd vimenter * NERDTree d:/App
+autocmd vimenter * TlistOpen
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
